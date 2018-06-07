@@ -1,5 +1,4 @@
 import java.util.Collection;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Matricula {
@@ -15,11 +14,14 @@ public class Matricula {
 
     public Matricula(long id, String nom, String cognoms, String dni, int curs, Collection assignatures) {
         this.id = id;
-        this.nom = nom;
-        this.cognoms = cognoms;
-        this.dni = dni;
+        getEstudiant(nom, cognoms, dni).invoke();
         this.curs = curs;
         this.assignatures = assignatures;
+    }
+
+    //He fet un 'extract method' al new Estudiant per un getEstudiant.
+    private Estudiant getEstudiant(String nom, String cognoms, String dni) {
+        return new Estudiant(nom, cognoms, dni);
     }
 
     public float costMatricula(){
@@ -36,4 +38,21 @@ public class Matricula {
         return cost;
     }
 
+    private class Estudiant {
+        private String nom;
+        private String cognoms;
+        private String dni;
+
+        public Estudiant(String nom, String cognoms, String dni) {
+            this.nom = nom;
+            this.cognoms = cognoms;
+            this.dni = dni;
+        }
+
+        public void invoke() {
+            Matricula.this.nom = nom;
+            Matricula.this.cognoms = cognoms;
+            Matricula.this.dni = dni;
+        }
+    }
 }
